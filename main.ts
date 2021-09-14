@@ -35,7 +35,7 @@ const animal: Animal = await dbAnimals.findOne({ name: 'Bob' }) || defaultAnimal
 const app = new Application();
 
 app.use((ctx) => {
-  ctx.response.body = `Hello, world!`;
+  ctx.response.body = `Hello, world! ${Deno.env.get('token')}`;
   // ctx.response.body = `${animal.name}, the ${animal.type}, says "${animal.greet}"`;
 });
 
