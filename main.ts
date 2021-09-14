@@ -1,4 +1,6 @@
 import { Application } from "https://deno.land/x/oak/mod.ts";
+
+/*
 import { Database } from 'https://deno.land/x/aloedb@0.9.0/mod.ts'
 
 // Database -------------------------------------------------------------------
@@ -26,13 +28,15 @@ if(dbAnimalsIsEmpty) {
   });
 }
 const animal: Animal = await dbAnimals.findOne({ name: 'Bob' }) || defaultAnimal;
+*/
 
 // HTTP Server ----------------------------------------------------------------
 
 const app = new Application();
 
 app.use((ctx) => {
-  ctx.response.body = `${animal.name}, the ${animal.type}, says "${animal.greet}"`;
+  ctx.response.body = `Hello, world!`;
+  // ctx.response.body = `${animal.name}, the ${animal.type}, says "${animal.greet}"`;
 });
 
 app.addEventListener("listen", ({ hostname, port, secure }) => {
