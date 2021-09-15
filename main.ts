@@ -1,49 +1,22 @@
-import { Application } from "https://deno.land/x/oak/mod.ts";
+import { Application, Router, Context } from "https://deno.land/x/oak/mod.ts";
 
-/*
-import { Database } from 'https://deno.land/x/aloedb@0.9.0/mod.ts'
-
-// Database -------------------------------------------------------------------
-
-interface Animal {
-  type: string;
-  name: string;
-  greet: string;
-}
-
-const defaultAnimal:Animal = {
-  type: 'Animal',
-  name: 'Undefined',
-  greet: 'Silence',
-};
-
-const dbAnimals = new Database<Animal>('./database/animals.json');
-const dbAnimalsIsEmpty = await dbAnimals.count() == 0;
-
-if(dbAnimalsIsEmpty) {
-  await dbAnimals.insertOne({
-    type: 'Dog',
-    name: 'Bob',
-    greet: 'Au-au...',
-  });
-}
-const animal: Animal = await dbAnimals.findOne({ name: 'Bob' }) || defaultAnimal;
-*/
-
-// HTTP Server ----------------------------------------------------------------
+const router = new Router();
+router
+  .get("/", (ctx: Context) => {
+    ctx.response.type = "application/json; charset=utf-8";
+    return ctx.response.body = { message: "Hello, world!"};
+  })
 
 const app = new Application();
 
-app.use((ctx) => {
-  ctx.response.body = `Hello, world! ${Deno.env.get('token')}`;
-  // ctx.response.body = `${animal.name}, the ${animal.type}, says "${animal.greet}"`;
-});
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 app.addEventListener("listen", ({ hostname, port, secure }) => {
   console.log(
     `Listening on: ${secure ? "https://" : "http://"}${hostname ??
-      "localhost"}:${port}`,
-  );
-});
+    "localhost"}:${port}`,
+    );
+  });
 
-await app.listen({port:80});
+await app.listen({port:8000});
